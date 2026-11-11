@@ -1,0 +1,34 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:7
+    container_name: syncspace-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+
+  server:
+    build: ./server
+    container_name: syncspace-server
+    restart: always
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
+
+  client:
+    build: ./client
+    container_name: syncspace-client
+    restart: always
+    ports:
+      - "5173:80"
+
+volumes:
+  mongo-data:

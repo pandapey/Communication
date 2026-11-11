@@ -1,0 +1,328 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ease-spring: cubic-bezier(0.21, 0.9, 0.35, 1);
+  --dur-fast: 150ms;
+  --dur-med: 280ms;
+  --dur-slow: 500ms;
+}
+
+html, body, #root { height: 100%; }
+
+body {
+  font-family: Inter, 'Plus Jakarta Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background: #f6f7fb;
+}
+
+.dark body, .dark {
+  background: #070b18;
+}
+
+.font-display { font-family: Sora, Inter, system-ui, sans-serif; }
+
+/* ---------- surfaces ---------- */
+@layer components {
+  .glass {
+    @apply bg-white/75 dark:bg-ink-800/70 backdrop-blur-xl border border-white/40 dark:border-white/10;
+  }
+  .card-premium {
+    @apply bg-white dark:bg-ink-800 border border-slate-200/70 dark:border-white/10 rounded-xl3 shadow-card;
+  }
+  .input-premium {
+    @apply w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-ink-900 px-3.5 py-2.5 text-sm outline-none transition-all duration-200 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15 text-slate-900 dark:text-white;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-violet-600 text-white font-semibold text-sm px-4 py-2.5 shadow-glow transition-all duration-200 hover:brightness-110 hover:-translate-y-[1px] active:translate-y-0 active:scale-[.98] disabled:opacity-60 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/30;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 px-3.5 py-2 text-sm font-medium transition-all duration-200 hover:bg-slate-50 dark:hover:bg-white/10 hover:-translate-y-[1px] active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/20;
+  }
+  .btn-danger-ghost {
+    @apply text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5;
+  }
+  .tab-pill {
+    @apply flex-1 capitalize rounded-xl px-2 py-2 text-[13px] font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500;
+  }
+  .icon-btn {
+    @apply inline-flex items-center justify-center w-9 h-9 rounded-xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 transition-all duration-200 hover:-translate-y-[1px] hover:shadow-card active:translate-y-0 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand-500/20;
+  }
+  .skeleton {
+    @apply relative overflow-hidden bg-slate-200/80 dark:bg-white/10 rounded-lg;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.55), transparent);
+    background-size: 400px 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+  .dark .skeleton::after {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+    background-size: 400px 100%;
+  }
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-600 via-violet-600 to-cyan-500 dark:from-brand-300 dark:via-violet-300 dark:to-cyan-300;
+  }
+  .msg-own {
+    background: #d9fdd3;
+    color: #111b21;
+    box-shadow: 0 1px 1px rgba(11,20,26,.12);
+  }
+  .dark .msg-own {
+    background: #005c4b;
+    color: #e9edef;
+  }
+  .msg-other {
+    @apply bg-white dark:bg-wa-indark border border-black/[.06] dark:border-white/5;
+    color: #111b21;
+    box-shadow: 0 1px 1px rgba(11,20,26,.12);
+  }
+  .dark .msg-other { color: #e9edef; }
+  .hover-lift {
+    transition: transform var(--dur-med) var(--ease-spring), box-shadow var(--dur-med) var(--ease-spring), background var(--dur-fast) ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.gradient-mesh {
+  background:
+    radial-gradient(600px 320px at 15% 10%, rgba(99,102,241,.18), transparent 60%),
+    radial-gradient(500px 300px at 85% 15%, rgba(34,211,165,.14), transparent 60%),
+    radial-gradient(700px 380px at 50% 100%, rgba(124,58,237,.12), transparent 60%);
+}
+.dark .gradient-mesh {
+  background:
+    radial-gradient(700px 360px at 15% 0%, rgba(99,102,241,.28), transparent 60%),
+    radial-gradient(560px 320px at 88% 12%, rgba(34,211,165,.16), transparent 60%),
+    radial-gradient(800px 420px at 50% 110%, rgba(124,58,237,.22), transparent 60%);
+}
+
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  pointer-events: none;
+  opacity: .55;
+}
+
+.scroll-thin { scrollbar-width: thin; scrollbar-color: rgba(100,116,139,.4) transparent; }
+.scroll-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.scroll-thin::-webkit-scrollbar-thumb { @apply bg-slate-300 dark:bg-white/20 rounded-full; }
+.scroll-thin::-webkit-scrollbar-track { background: transparent; }
+
+/* Entrance helpers with stagger via inline style --d */
+.anim-fade-up { animation: fade-up .55s cubic-bezier(.21,.9,.35,1) both; animation-delay: var(--d, 0ms); }
+.anim-pop { animation: pop-in .28s cubic-bezier(.21,.9,.35,1) both; }
+.anim-slide-right { animation: slide-in-right .4s cubic-bezier(.21,.9,.35,1) both; }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes pop-in {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.typing-dots span {
+  width: 6px; height: 6px; border-radius: 9999px;
+  @apply bg-brand-500;
+  display: inline-block;
+  animation: typing-bounce 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: .15s; }
+.typing-dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes typing-bounce {
+  0%, 80%, 100% { transform: scale(.7); opacity: .5; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 2px solid rgba(99,102,241,.6);
+  outline-offset: 2px;
+}
+
+/* Page transition wrapper */
+.page-enter { animation: fade-up .45s cubic-bezier(.21,.9,.35,1) both; }
+
+/* ---------- WhatsApp-style chat theme ---------- */
+.wa-chat-bg {
+  background-color: #efeae2;
+  background-image:
+    radial-gradient(rgba(11,20,26,.045) 1px, transparent 1.4px),
+    radial-gradient(rgba(11,20,26,.03) 1px, transparent 1.4px);
+  background-size: 26px 26px, 42px 42px;
+  background-position: 0 0, 13px 13px;
+}
+.dark .wa-chat-bg {
+  background-color: #0b141a;
+  background-image:
+    radial-gradient(rgba(233,237,239,.05) 1px, transparent 1.4px),
+    radial-gradient(rgba(233,237,239,.035) 1px, transparent 1.4px);
+  background-size: 26px 26px, 42px 42px;
+  background-position: 0 0, 13px 13px;
+}
+.wa-header {
+  @apply bg-wa-header dark:bg-wa-headerdark;
+}
+.wa-side {
+  @apply bg-white dark:bg-wa-sidedark;
+}
+.wa-bubble {
+  border-radius: 18px;
+  box-shadow: 0 1px 2px rgba(11,20,26,.12);
+  position: relative;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.wa-bubble-out { border-top-right-radius: 6px; }
+.wa-bubble-in { border-top-left-radius: 6px; }
+.wa-date-pill {
+  @apply bg-white dark:bg-wa-headerdark text-wa-sub dark:text-wa-subdark;
+  box-shadow: 0 1px 1px rgba(11,20,26,.12);
+}
+.wa-encrypt {
+  @apply bg-wa-encrypt dark:bg-wa-encryptdark text-[#54656f] dark:text-[#ffd279];
+}
+.wa-tick-read { color: #53bdeb; }
+.wa-unread-badge {
+  background: linear-gradient(135deg, #00a884, #008069);
+  color: #fff;
+  box-shadow: 0 2px 8px -2px rgba(0,128,105,.5);
+}
+.wa-search {
+  @apply bg-wa-input dark:bg-wa-inputdark rounded-2xl;
+  border: 1px solid transparent;
+  transition: box-shadow var(--dur-fast) ease, border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+}
+.wa-search:hover {
+  border-color: rgba(0,168,132,.25);
+}
+.wa-search:focus-within {
+  border-color: rgba(0,168,132,.45);
+  box-shadow: 0 0 0 4px rgba(0,168,132,.14);
+}
+/* Kill the square browser outline inside pills — the container ring follows the rounded shape instead */
+.wa-search input:focus,
+.wa-search input:focus-visible,
+.wa-textbox textarea:focus,
+.wa-textbox textarea:focus-visible,
+.wa-textbox input:focus,
+.wa-textbox input:focus-visible {
+  outline: none !important;
+  outline-offset: 0 !important;
+  box-shadow: none !important;
+}
+.wa-filter-active {
+  background: #d1f4cc;
+  color: #008069;
+}
+.dark .wa-filter-active {
+  background: #00a884;
+  color: #fff;
+}
+.wa-input-bar {
+  @apply bg-wa-header dark:bg-wa-headerdark;
+}
+.wa-textbox {
+  @apply bg-white dark:bg-wa-inputdark rounded-3xl;
+  transition: box-shadow var(--dur-fast) ease, border-color var(--dur-fast) ease;
+  border: 1px solid transparent;
+}
+.wa-textbox:hover {
+  border-color: rgba(0,168,132,.25);
+}
+.wa-textbox:focus-within {
+  border-color: rgba(0,168,132,.45);
+  box-shadow: 0 0 0 4px rgba(0,168,132,.14);
+}
+
+/* Premium motion system — GPU-friendly, transform/opacity only */
+.msg-in { animation: msg-in .32s var(--ease-spring) both; }
+@keyframes msg-in {
+  from { opacity: 0; transform: translateY(8px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.anim-fade-in { animation: fade-in .3s ease both; }
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.btn-press { transition: transform .16s var(--ease-spring), filter .16s ease, box-shadow .2s ease; }
+.btn-press:active { transform: scale(.95); }
+.row-active { position: relative; }
+.row-active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 3px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, #00a884, #6366f1);
+}
+.topbar-glass {
+  @apply bg-white/85 dark:bg-ink-900/80;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.chat-shell {
+  background:
+    radial-gradient(700px 320px at 10% -5%, rgba(99,102,241,.10), transparent 60%),
+    radial-gradient(600px 300px at 95% 0%, rgba(34,211,165,.10), transparent 60%);
+}
+.dark .chat-shell {
+  background:
+    radial-gradient(700px 320px at 10% -5%, rgba(99,102,241,.16), transparent 60%),
+    radial-gradient(600px 300px at 95% 0%, rgba(34,211,165,.10), transparent 60%);
+}
+.presence-pill {
+  @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold;
+}
+.seg-tab { transition: background .2s ease, color .2s ease, transform .16s var(--ease-spring), box-shadow .2s ease; }
+.seg-tab:active { transform: scale(.96); }
+
+/* Fix Chrome autofill / copy-paste turning fields black and hiding text */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill {
+  -webkit-text-fill-color: #0f172a;
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset;
+  box-shadow: 0 0 0 1000px #ffffff inset;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #0f172a;
+}
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark textarea:-webkit-autofill {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 1000px #0f172a inset;
+  box-shadow: 0 0 0 1000px #0f172a inset;
+  caret-color: #ffffff;
+}
+input, textarea { caret-color: inherit; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .orb { display: none; }
+}

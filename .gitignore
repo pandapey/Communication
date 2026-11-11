@@ -1,0 +1,24 @@
+# Deps
+node_modules/
+client/dist/
+client/node_modules/
+server/node_modules/
+
+# Env
+.env
+server/.env
+client/.env
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Uploads (local fallback)
+server/uploads/
+tmp/
